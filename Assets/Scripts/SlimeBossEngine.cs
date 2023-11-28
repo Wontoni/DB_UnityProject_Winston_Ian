@@ -41,8 +41,8 @@ public class SlimeBoss : MonoBehaviour
         if (Time.time > nextActionTime)
         {
             nextActionTime += period;
-            //Jump(hitbox);
-            gotHit();
+            Jump(hitbox);
+            //gotHit();
         }
 
         chasePlayer();
