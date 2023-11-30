@@ -20,6 +20,7 @@ public class PlayerLook : MonoBehaviour
         Vector2 worldMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
         Vector2 direction = worldMousePosition - new Vector2(transform.position.x, transform.position.y);
         mousePos = direction.normalized;
+        mousePos *= 2;
 
         animator.SetFloat("MousePosX", mousePos.x);
         animator.SetFloat("MousePosY", mousePos.y);

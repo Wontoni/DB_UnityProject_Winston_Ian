@@ -10,10 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 188229826408186066}
   - component: {fileID: 6818154606201532456}
-  - component: {fileID: 1872988816552625562}
+  - component: {fileID: 5535540138805054717}
   - component: {fileID: 2290657792883653185}
-  - component: {fileID: 2797315870481585251}
   - component: {fileID: 8066701598553459856}
+  - component: {fileID: 2797315870481585251}
+  - component: {fileID: 6902617443052894908}
+  - component: {fileID: 7445592580145504327}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -75,7 +77,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1448265695
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 2075652179, guid: 73c33b0713f7a384f90d736b96157cca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -88,8 +90,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &1872988816552625562
-PolygonCollider2D:
+--- !u!61 &5535540138805054717
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -120,7 +122,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.67899454}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -130,15 +132,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.3125, y: 0.71875}
-      - {x: -0.375, y: 0.59375}
-      - {x: -0.375, y: -0.71875}
-      - {x: 0.375, y: -0.71875}
-      - {x: 0.375, y: 0.59375}
-      - {x: 0.3125, y: 0.71875}
-  m_UseDelaunayMesh: 0
+  serializedVersion: 2
+  m_Size: {x: 0.75, y: 0.18104243}
+  m_EdgeRadius: 0
 --- !u!50 &2290657792883653185
 Rigidbody2D:
   serializedVersion: 4
@@ -166,23 +162,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2797315870481585251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3997320135444847605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b172ba83b30ccff4781707f6a9149156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  moveInput: {x: 0, y: 0}
-  animator: {fileID: 0}
-  spriteRenderer: {fileID: 0}
-  speed: 0
 --- !u!95 &8066701598553459856
 Animator:
   serializedVersion: 5
@@ -204,3 +183,50 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2797315870481585251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3997320135444847605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b172ba83b30ccff4781707f6a9149156, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  moveInput: {x: 0, y: 0}
+  animator: {fileID: 0}
+  speed: 0
+--- !u!114 &6902617443052894908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3997320135444847605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a6e4c15c05ee234a9abdf1f05d3b282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  mousePos: {x: 0, y: 0, z: 0}
+--- !u!114 &7445592580145504327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3997320135444847605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 684d68774f64eb5418d7409eef4d3180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  canShoot: 0
+  arrowPrefab: {fileID: 1181481240845160991, guid: 7f7103acc1f86184db8292f331486f0f,
+    type: 3}
+  shootForce: 20

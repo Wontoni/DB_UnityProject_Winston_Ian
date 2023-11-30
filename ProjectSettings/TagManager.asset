@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Arrow
   layers:
   - Default
   - TransparentFX
@@ -11,9 +12,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - PlayerProjectile
+  - Player
+  - HiddenWall
   - 
   - 
   - 
@@ -41,9 +42,36 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
-    uniqueID: 1448265695
+  - name: BaseFloor
+    uniqueID: 213054649
+    locked: 0
+  - name: Floor Shading
+    uniqueID: 2614747591
+    locked: 0
+  - name: Background Walls
+    uniqueID: 1567714307
+    locked: 0
+  - name: Water
+    uniqueID: 106624505
+    locked: 0
+  - name: Path
+    uniqueID: 3808323735
+    locked: 0
+  - name: GroundClutter
+    uniqueID: 868951681
+    locked: 0
+  - name: TreeBackground
+    uniqueID: 1751154975
     locked: 0
   - name: BaseWalls
     uniqueID: 1414177445
+    locked: 0
+  - name: Player
+    uniqueID: 1448265695
+    locked: 0
+  - name: Projectiles
+    uniqueID: 480719989
+    locked: 0
+  - name: TreeForeground
+    uniqueID: 2736667847
     locked: 0

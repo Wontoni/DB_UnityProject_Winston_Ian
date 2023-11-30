@@ -21,15 +21,20 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveInput.x = Input.GetAxisRaw("Horizontal");
-        moveInput.y = Input.GetAxisRaw("Vertical");
-        moveInput.Normalize();
 
+        if(Input.GetMouseButton(0))
+        {
+            moveInput *= 0;
+        } else {
+            moveInput.x = Input.GetAxisRaw("Horizontal");
+            moveInput.y = Input.GetAxisRaw("Vertical");
+            moveInput.Normalize();
+        }
         animator.SetFloat("MoveSpeed", moveInput.sqrMagnitude);
     }
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + speed * Time.fixedDeltaTime * moveInput);
     }
 }
