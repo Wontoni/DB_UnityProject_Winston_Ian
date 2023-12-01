@@ -6,8 +6,6 @@ public class SlimeBoss : MonoBehaviour
 {
     [SerializeField] GameObject slimeboss;
 
-    [SerializeField] float jump;
-
     [Range(0f, 20f)]
     [SerializeField] float period = 1.0f;
 
@@ -60,6 +58,7 @@ public class SlimeBoss : MonoBehaviour
         {
             rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
         }
+        
     }
 
     private void Jump(PolygonCollider2D other)
