@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Arrow
+  - Projectile
+  - SlimeBoss
+  - SlimeDuplicate
   layers:
   - Default
   - TransparentFX

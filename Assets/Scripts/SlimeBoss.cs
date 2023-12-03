@@ -18,6 +18,8 @@ public class FakeHeightObject : MonoBehaviour
     public Vector2 groundVelocity;
     public float verticalVelocity;
 
+    private int hitsTaken = 5;
+
     public bool isGrounded;
     private bool jumpStarted = false;
 
@@ -71,7 +73,12 @@ public class FakeHeightObject : MonoBehaviour
             timeSinceJump = 0;
             jumpStarted = false;
             Initialize(rb.velocity, 13);
-            hitbox.GetComponent<PolygonCollider2D>().enabled = false;
+            hitbox.enabled = false;
+        }
+
+        if (trnsBodyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Green Death - Animation"))
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -109,7 +116,7 @@ public class FakeHeightObject : MonoBehaviour
 
     void GroundHit()
     {
-        hitbox.GetComponent<PolygonCollider2D>().enabled = true;
+        hitbox.enabled = true;
     }
 
     private void FixedUpdate()
@@ -141,19 +148,27 @@ public class FakeHeightObject : MonoBehaviour
 
     private void gotHit()
     {
-        trnsBodyAnimator.SetTrigger("isHurt");
+        hitsTaken--;
 
-        trnsBody.transform.localScale = new Vector3(trnsBody.transform.localScale.x - 0.75f, trnsBody.transform.localScale.y - 1f); // max 5 times
+        if (hitsTaken <= 0)
+        {
+            trnsBodyAnimator.SetTrigger("isHurt");
+            trnsBodyAnimator.SetTrigger("isDead");
+        } else
+        {
+            trnsBodyAnimator.SetTrigger("isHurt");
 
-        trnsShadow.transform.localScale = new Vector3(trnsShadow.transform.localScale.x - 0.72f, trnsShadow.transform.localScale.y);
-        trnsShadow.transform.position = new Vector3(trnsShadow.transform.position.x, trnsShadow.transform.position.y + 0.5f);
+            trnsBody.transform.localScale = new Vector3(trnsBody.transform.localScale.x - 0.75f, trnsBody.transform.localScale.y - 1f); // max 5 times
+
+            trnsShadow.transform.localScale = new Vector3(trnsShadow.transform.localScale.x - 0.72f, trnsShadow.transform.localScale.y);
+            trnsShadow.transform.position = new Vector3(trnsShadow.transform.position.x, trnsShadow.transform.position.y + 0.5f);
+        }
     }
 
     private void SlimeDuplicate()
     {
-        GameObject newSlimeBoss = Instantiate(slimeboss);
-        newSlimeBoss.transform.localScale = new Vector3(transform.localScale.x - 0.75f, transform.localScale.y - 1f);
-        newSlimeBoss.transform.position = transform.position;
+        GameObject newSlimeBoss = Instantiate(slimeboss) as GameObject;
+        newSlimeBoss.transform.position = new Vector2(-1, 4);
         newSlimeBoss.SetActive(true);
     }
 
@@ -162,7 +177,7 @@ public class FakeHeightObject : MonoBehaviour
         if (collision.gameObject.CompareTag("Projectile"))
         {
             gotHit();
-            //SlimeDuplicate();
+            SlimeDuplicate();
         }
 
         if (collision.gameObject.CompareTag("Player"))

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5839057236377266168}
   - component: {fileID: 6123823950248647420}
   m_Layer: 0
-  m_Name: SlimeBoss
+  m_Name: DeleteSlime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
