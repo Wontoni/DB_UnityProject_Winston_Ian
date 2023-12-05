@@ -9,9 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScreen.unity
     guid: f19d59299045e014cab94609c11ef9d8
   - enabled: 1
-    path: Assets/Scenes/MainScene.unity
+    path: Assets/Scenes/MainScreen.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/SlimeBoss.unity
     guid: 4126cb1955bff4e4e9306d42b0a6bebf
+  - enabled: 1
+    path: Assets/Scenes/GameScreen.unity
+    guid: a41dcac1159f2fd43a722413987ad65f
   m_configObjects: {}

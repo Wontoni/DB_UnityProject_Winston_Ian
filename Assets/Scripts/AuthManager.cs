@@ -3,23 +3,35 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class AuthManager : MonoBehaviour
 {
-    [SerializeField] GameObject registerScreen;
-    [SerializeField] GameObject loginScreen;
+    [SerializeField] public GameObject gameManager;
+    [SerializeField] public GameObject registerScreen;
+    [SerializeField] public GameObject loginScreen;
+    [SerializeField] public GameObject titleScreen;
 
-    [SerializeField] TMP_InputField registerUsername;
-    [SerializeField] TMP_InputField registerPassword;
-    [SerializeField] TMP_InputField registerEmail;
+    [SerializeField] public TMP_InputField registerUsername;
+    [SerializeField] public TMP_InputField registerPassword;
+    [SerializeField] public TMP_InputField registerEmail;
 
-    [SerializeField] TMP_InputField loginEmail;
-    [SerializeField] TMP_InputField loginPassword;
+    [SerializeField] public TMP_InputField loginEmail;
+    [SerializeField] public TMP_InputField loginPassword;
 
-    public void SwitchLoginScreen()
+
+    public void OpenRegister()
     {
-        registerScreen.SetActive(!registerScreen.activeInHierarchy);
-        loginScreen.SetActive(!registerScreen.activeInHierarchy);
+        registerScreen.SetActive(true);
+        loginScreen.SetActive(false);
+        titleScreen.SetActive(false);
+    }
+
+    public void OpenLogin()
+    {
+        registerScreen.SetActive(false);
+        loginScreen.SetActive(true);
+        titleScreen.SetActive(false);
     }
 
     public void RegisterPress()
@@ -53,8 +65,10 @@ public class AuthManager : MonoBehaviour
         string url = "http://localhost:3000/auth/login";
         UnityWebRequest request = UnityWebRequest.Post(url, form);
         yield return request.SendWebRequest();
-        var response = request.downloadHandler.text;
-        print(response);
+        var response = JsonUtility.FromJson<RequestFormat>(request.downloadHandler.text);
+        print(request.downloadHandler.text);
+        print(response.user.is_slime_defeated);
+
     }
 
     public void CheckSession()
@@ -67,8 +81,8 @@ public class AuthManager : MonoBehaviour
         string url = "http://localhost:3000/verify";
         UnityWebRequest request = UnityWebRequest.Get(url);
         yield return request.SendWebRequest();
-        var response = request.downloadHandler.text;
-        print(response);
+        var response =  JsonUtility.FromJson<RequestFormat>(request.downloadHandler.text);
+        print(response.success);
     }
 
     public void DestroySession()
@@ -84,6 +98,11 @@ public class AuthManager : MonoBehaviour
         yield return request.SendWebRequest();
         var response = request.downloadHandler.text;
         print(response);
+    }
+
+    private void SuccessfulLogin()
+    {
+
     }
 
 }
