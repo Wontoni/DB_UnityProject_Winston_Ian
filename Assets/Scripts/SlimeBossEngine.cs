@@ -70,13 +70,13 @@ public class SlimeBoss : MonoBehaviour
     private void gotHit()
     {
         animator.SetTrigger("isHurt");
-        transform.localScale = new Vector3(transform.localScale.x - 0.75f, transform.localScale.y - 1f); // max 5 times
+        transform.localScale = new Vector3(transform.localScale.x - 1f, transform.localScale.y - 1f); // max 5 times
     }
 
     private void SlimeDuplicate()
     {
         GameObject newSlimeBoss = Instantiate(slimeboss);
-        newSlimeBoss.transform.localScale = new Vector3(transform.localScale.x - 0.75f, transform.localScale.y - 1f);
+        newSlimeBoss.transform.localScale = new Vector3(transform.localScale.x - 1f, transform.localScale.y - 1f);
         newSlimeBoss.transform.position = transform.position;
         newSlimeBoss.SetActive(true);
     }

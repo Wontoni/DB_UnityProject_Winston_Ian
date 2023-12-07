@@ -11,6 +11,11 @@ public class EnterCave : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            GameManager gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+            gameManager.ToggleCanSave();
+            Vector3 newPos = new(gameObject.transform.position.x, (float)(gameObject.transform.position.y - 0.9), 0);
+            gameManager.SetUserPos(newPos);
+            gameManager.SavePlayerData();
             SceneManager.LoadScene(sceneName);
         }
     }

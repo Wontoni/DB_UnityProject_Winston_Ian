@@ -41,7 +41,6 @@ public class PlayerShoot : MonoBehaviour
 
     public void ShootArrow()
     {
-        print("SHOOT ARROW");
         Vector3 targetDir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
         GameObject arrow = Instantiate(arrowPrefab);

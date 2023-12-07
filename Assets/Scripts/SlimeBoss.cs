@@ -8,6 +8,8 @@ public class FakeHeightObject : MonoBehaviour
 {
     [SerializeField] GameObject slimeboss;
 
+    [SerializeField] SlimeBossManager slimeBossManager;
+
     public Transform trnsObject;
     public Transform trnsBody;
     public Transform trnsShadow;
@@ -18,7 +20,7 @@ public class FakeHeightObject : MonoBehaviour
     public Vector2 groundVelocity;
     public float verticalVelocity;
 
-    private int hitsTaken = 5;
+    private int hitsTaken = 3;
 
     public bool isGrounded;
     private bool jumpStarted = false;
@@ -26,7 +28,7 @@ public class FakeHeightObject : MonoBehaviour
     [Range(0f, 20f)]
     [SerializeField] float period = 1.0f;
 
-    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float moveSpeed = 4f;
     Rigidbody2D rb;
     Transform target;
     Vector2 moveDirection;
@@ -41,39 +43,50 @@ public class FakeHeightObject : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         hitbox = GetComponent<PolygonCollider2D>();
         trnsBodyAnimator = trnsBody.GetComponent<Animator>();
+        slimeBossManager = GameObject.Find("SlimeBossManager").GetComponent<SlimeBossManager>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.Find("Player").transform;
+        if(gameObject.CompareTag("SlimeDuplicate"))
+        {
+            hitsTaken = 1;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdatePosition();
-        CheckGroundHit();
-        chasePlayer();
-
-        if (Time.time > nextActionTime)
+        if (slimeBossManager.GetBossAlive())
         {
-            nextActionTime += period;
-            JumpAnimation();
-            jumpStarted = true;
-        }
+            UpdatePosition();
+            CheckGroundHit();
+            chasePlayer();
 
-        if (jumpStarted)
-        {
-            timeSinceJump++;
-        }
+            if (Time.time > nextActionTime)
+            {
+                nextActionTime += period;
+                JumpAnimation();
+                jumpStarted = true;
+            }
 
-        if (timeSinceJump == 470) 
+            if (jumpStarted)
+            {
+                timeSinceJump++;
+            }
+
+            if (timeSinceJump == 470)
+            {
+                timeSinceJump = 0;
+                jumpStarted = false;
+                Initialize(rb.velocity, 13);
+                hitbox.enabled = false;
+            }
+        } else
         {
-            timeSinceJump = 0;
-            jumpStarted = false;
-            Initialize(rb.velocity, 13);
-            hitbox.enabled = false;
+            killSlime();
         }
 
         if (trnsBodyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Green Death - Animation"))
@@ -150,13 +163,12 @@ public class FakeHeightObject : MonoBehaviour
     {
         hitsTaken--;
 
-        if (hitsTaken <= 0)
-        {
-            trnsBodyAnimator.SetTrigger("isHurt");
+        trnsBodyAnimator.SetTrigger("isHurt");
+        if (hitsTaken <= 0) { 
+       
             trnsBodyAnimator.SetTrigger("isDead");
         } else
         {
-            trnsBodyAnimator.SetTrigger("isHurt");
 
             trnsBody.transform.localScale = new Vector3(trnsBody.transform.localScale.x - 0.75f, trnsBody.transform.localScale.y - 1f); // max 5 times
 
@@ -165,9 +177,14 @@ public class FakeHeightObject : MonoBehaviour
         }
     }
 
+    public void killSlime()
+    {
+        trnsBodyAnimator.SetTrigger("isDead");
+    }
+
     private void SlimeDuplicate()
     {
-        GameObject newSlimeBoss = Instantiate(slimeboss) as GameObject;
+        GameObject newSlimeBoss = Instantiate(slimeboss);
         newSlimeBoss.transform.position = new Vector2(-1, 4);
         newSlimeBoss.SetActive(true);
     }
@@ -184,6 +201,18 @@ public class FakeHeightObject : MonoBehaviour
         {
             Debug.Log("Player is dead");
         }
+    }
+
+    private void OnDestroy()
+    {
+        GameObject[] slimes = GameObject.FindGameObjectsWithTag("SlimeDuplicate");
+
+        slimeBossManager.KillBoss();
+        foreach (GameObject item in slimes)
+        {
+            item.GetComponent<FakeHeightObject>().killSlime();
+        }
+
     }
 
 }

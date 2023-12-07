@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - SlimeBoss
   - SlimeDuplicate
+  - GameManager
   layers:
   - Default
   - TransparentFX
@@ -80,4 +81,7 @@ TagManager:
     locked: 0
   - name: TreeForeground
     uniqueID: 2736667847
+    locked: 0
+  - name: Canvas
+    uniqueID: 2374344377
     locked: 0

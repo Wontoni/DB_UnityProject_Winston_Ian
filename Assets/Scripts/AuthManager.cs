@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -66,9 +67,10 @@ public class AuthManager : MonoBehaviour
         UnityWebRequest request = UnityWebRequest.Post(url, form);
         yield return request.SendWebRequest();
         var response = JsonUtility.FromJson<RequestFormat>(request.downloadHandler.text);
-        print(request.downloadHandler.text);
-        print(response.user.is_slime_defeated);
-
+        if(response.success)
+        {
+            SuccessfulLogin();
+        }
     }
 
     public void CheckSession()
@@ -82,7 +84,6 @@ public class AuthManager : MonoBehaviour
         UnityWebRequest request = UnityWebRequest.Get(url);
         yield return request.SendWebRequest();
         var response =  JsonUtility.FromJson<RequestFormat>(request.downloadHandler.text);
-        print(response.success);
     }
 
     public void DestroySession()
@@ -102,7 +103,6 @@ public class AuthManager : MonoBehaviour
 
     private void SuccessfulLogin()
     {
-
+        SceneManager.LoadScene("MainScreen");
     }
-
 }
