@@ -20,7 +20,7 @@ public class FakeHeightObject : MonoBehaviour
     public Vector2 groundVelocity;
     public float verticalVelocity;
 
-    private int hitsTaken = 3;
+    [SerializeField] private int hitsTaken = 3;
 
     public bool isGrounded;
     private bool jumpStarted = false;
@@ -50,10 +50,10 @@ public class FakeHeightObject : MonoBehaviour
     void Start()
     {
         target = GameObject.Find("Player").transform;
-        if(gameObject.CompareTag("SlimeDuplicate"))
-        {
-            hitsTaken = 1;
-        }
+        //if(gameObject.CompareTag("SlimeDuplicate"))
+        //{
+        //    hitsTaken = 1;
+        //}
     }
 
     // Update is called once per frame
@@ -165,11 +165,9 @@ public class FakeHeightObject : MonoBehaviour
 
         trnsBodyAnimator.SetTrigger("isHurt");
         if (hitsTaken <= 0) { 
-       
             trnsBodyAnimator.SetTrigger("isDead");
         } else
         {
-
             trnsBody.transform.localScale = new Vector3(trnsBody.transform.localScale.x - 0.75f, trnsBody.transform.localScale.y - 1f); // max 5 times
 
             trnsShadow.transform.localScale = new Vector3(trnsShadow.transform.localScale.x - 0.72f, trnsShadow.transform.localScale.y);
@@ -205,12 +203,16 @@ public class FakeHeightObject : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameObject[] slimes = GameObject.FindGameObjectsWithTag("SlimeDuplicate");
-
-        slimeBossManager.KillBoss();
-        foreach (GameObject item in slimes)
+        if (!gameObject.CompareTag("SlimeDuplicate"))
         {
-            item.GetComponent<FakeHeightObject>().killSlime();
+            GameObject[] slimes = GameObject.FindGameObjectsWithTag("SlimeDuplicate");
+
+            slimeBossManager.KillBoss();
+            foreach (GameObject item in slimes)
+            {
+                item.GetComponent<FakeHeightObject>().killSlime();
+            }
+
         }
 
     }

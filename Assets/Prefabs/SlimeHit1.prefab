@@ -242,12 +242,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slimeboss: {fileID: 6916031245691921048, guid: 10b8797454de57d479af997af3555815,
     type: 3}
+  slimeBossManager: {fileID: 0}
   trnsObject: {fileID: 6718682312461112844}
   trnsBody: {fileID: 2348732007767425634}
   trnsShadow: {fileID: 5205798420115150028}
   gravity: -20
   groundVelocity: {x: 0, y: 0}
   verticalVelocity: 13
+  hitsTaken: 2
   isGrounded: 0
   period: 7
   moveSpeed: 1

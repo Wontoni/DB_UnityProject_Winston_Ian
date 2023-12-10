@@ -50,12 +50,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slimeboss: {fileID: 7884789003476501577, guid: 0cee95f0ee125e746bc9104c1492c73e,
     type: 3}
+  slimeBossManager: {fileID: 0}
   trnsObject: {fileID: 2532326208187833366}
   trnsBody: {fileID: 5865908101137309347}
   trnsShadow: {fileID: 3287490371944473465}
   gravity: -20
   groundVelocity: {x: 0, y: 0}
   verticalVelocity: 13
+  hitsTaken: 1
   isGrounded: 0
   period: 7
   moveSpeed: 1
