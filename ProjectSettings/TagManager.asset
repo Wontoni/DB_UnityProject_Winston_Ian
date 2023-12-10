@@ -9,6 +9,7 @@ TagManager:
   - SlimeBoss
   - SlimeDuplicate
   - GameManager
+  - PumpkinBoss
   layers:
   - Default
   - TransparentFX
@@ -22,8 +23,8 @@ TagManager:
   - PlayerEnvironmentCollider
   - PlayerEnemyCollider
   - Enemy
-  - 
-  - 
+  - EnemyEnvironementCollider
+  - EnemyPlayerCollider
   - 
   - 
   - 

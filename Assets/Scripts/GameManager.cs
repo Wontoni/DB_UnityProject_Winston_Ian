@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     // Bosses
     [SerializeField] private bool isSlimeDefeated = false;
+    [SerializeField] private bool isPumpkinDefeated = false;
 
     // Player Object
     [SerializeField] private GameObject playerObj;
@@ -56,6 +57,8 @@ public class GameManager : MonoBehaviour
         }
         SavePlayerData();
         ToggleGameStarted();
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("MainGame");
     }
 
     public void ToggleGameStarted()
@@ -75,7 +78,7 @@ public class GameManager : MonoBehaviour
 
     public void SetUserData(PlayerData data)
     {
-        if (data.success)
+        if (data != null && data.success)
         {
             userData = data;
             isSlimeDefeated = userData.is_slime_defeated;
@@ -108,6 +111,7 @@ public class GameManager : MonoBehaviour
             userData.last_ypos = pos.y;
         }
     }
+
     public bool GetSlimeDefeated()
     {
         if (HasPlayerData())
@@ -131,7 +135,8 @@ public class GameManager : MonoBehaviour
 
     public bool HasPlayerData()
     {
-        return userData != null;
+        if (userData == null) return false;
+        return userData.success;
     }
 
     public IEnumerator SaveUserData()
@@ -152,5 +157,16 @@ public class GameManager : MonoBehaviour
         {
             print("Failed to save");
         }
+    }
+
+    public void GameOver()
+    {
+        userData.last_xpos = 0;
+        userData.last_ypos = 0;
+        isSlimeDefeated = false;
+        isPumpkinDefeated = false;
+        SavePlayerData();
+        Destroy(playerObj);
+
     }
 }

@@ -28,15 +28,13 @@ public class MainScreenManager : MonoBehaviour
         else
         {
             manager = gameManager.GetComponent<GameManager>();
-            resumeButton.interactable = manager.HasPlayerData();
+            //resumeButton.interactable = manager.HasPlayerData();
         }
     }
 
     public void NewGame()
     {
         manager.StartNewGame();
-        Time.timeScale = 1.0f;
-        SceneManager.LoadScene("MainGame");
     }
 
     public void ResumeGame()
@@ -69,6 +67,7 @@ public class MainScreenManager : MonoBehaviour
         yield return request.SendWebRequest();
         PlayerData playerData = JsonUtility.FromJson<PlayerData>(request.downloadHandler.text);
         gameManager.GetComponent<GameManager>().SetUserData(playerData);
+        resumeButton.interactable = playerData.success;
     }
 
 }

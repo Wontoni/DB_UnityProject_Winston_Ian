@@ -11,11 +11,15 @@ public class MainGameManager : MonoBehaviour
     [SerializeField] public GameObject player;
 
     [SerializeField] public GameObject pausePopup;
+    [SerializeField] public GameObject settings;
+
+    [SerializeField] public GameObject gameOverCanvas;
 
     [SerializeField] public bool isBossRoom = false;
 
     private void Awake()
     {
+        settings = GameObject.Find("Settings");
         gameManager = GameObject.FindGameObjectWithTag("GameManager");
         if (gameManager == null)
         {
@@ -38,6 +42,14 @@ public class MainGameManager : MonoBehaviour
             pausePopup.SetActive(false);
             Time.timeScale = 1f;
             manager.ToggleGameStarted();
+        }
+
+        if(player == null)
+        {
+            Time.timeScale = 0f;
+            settings.SetActive(false);
+            pausePopup.SetActive(false);
+            gameOverCanvas.SetActive(true);
         }
     }
 
@@ -65,11 +77,17 @@ public class MainGameManager : MonoBehaviour
 
     public void ExitGame()
     {
+        Time.timeScale = 0.0f;
         SceneManager.LoadScene("MainScreen");
     }
 
     public void SaveGame()
     {
         manager.SavePlayerData();
+    }
+
+    public void GameOverNewGame()
+    {
+        manager.StartNewGame();
     }
 }
