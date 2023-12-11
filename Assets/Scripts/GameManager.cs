@@ -54,21 +54,27 @@ public class GameManager : MonoBehaviour
             userData.last_xpos = 0;
             userData.last_ypos = 0;
             userData.is_slime_defeated = false;
+            userData.is_pumpkin_defeated = false;
         }
         SavePlayerData();
-        ToggleGameStarted();
+        ToggleGameStarted(true);
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("MainGame");
     }
 
-    public void ToggleGameStarted()
+    public void ToggleGameStarted(bool state)
     {
-        gameStarted = !gameStarted;
+        gameStarted = state;
     }
 
-    public void ToggleCanSave()
+    public void EnableSave()
     {
-        canSave = !canSave;
+        canSave = true;
+    }
+
+    public void DisableSave()
+    {
+        canSave = false;
     }
 
     public void SetPlayer(GameObject player)
@@ -82,6 +88,7 @@ public class GameManager : MonoBehaviour
         {
             userData = data;
             isSlimeDefeated = userData.is_slime_defeated;
+            isPumpkinDefeated = userData.is_pumpkin_defeated;
             timer = userData.timer;
         } else
         {
@@ -122,6 +129,28 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+    public void DefeatSlime()
+    {
+        isSlimeDefeated = true;
+        EnableSave();
+        SavePlayerData();
+    }
+    public bool GetPumpkinDefeated()
+    {
+        if (HasPlayerData())
+        {
+            return userData.is_pumpkin_defeated;
+        }
+
+        return false;
+    }
+
+    public void DefeatPumpkin()
+    {
+        isPumpkinDefeated = true;
+        EnableSave();
+        SavePlayerData();
+    }
     public void SavePlayerData()
     {
         if (canSave)
@@ -146,6 +175,7 @@ public class GameManager : MonoBehaviour
         form.AddField("last_xpos", pos.x.ToString());
         form.AddField("last_ypos", pos.y.ToString());
         form.AddField("is_slime_defeated", isSlimeDefeated ? "1" : "0");
+        form.AddField("is_pumpkin_defeated", isPumpkinDefeated ? "1" : "0");
         form.AddField("timer", timer.ToString());
         form.AddField("has_save", HasPlayerData() ? "1" : "0");
 
@@ -165,7 +195,9 @@ public class GameManager : MonoBehaviour
         userData.last_ypos = 0;
         isSlimeDefeated = false;
         isPumpkinDefeated = false;
+        EnableSave();
         SavePlayerData();
+        ToggleGameStarted(false);
         Destroy(playerObj);
 
     }

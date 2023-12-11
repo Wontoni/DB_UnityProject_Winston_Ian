@@ -10,9 +10,12 @@ public class PumpkinBoss : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private bool isIdle = true;
     [SerializeField] private bool isAttacking = false;
+    [SerializeField] private bool isDead = false;
     [SerializeField] private float attackCoolDownCounter = 0.0f;
     [SerializeField] private float attackCoolDown = 3.0f;
     [SerializeField] private float speed = 2.0f;
+
+    [SerializeField] private bool isVulnerable = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,10 @@ public class PumpkinBoss : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        if(gameManager.GetPumpkinDefeated())
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -34,7 +41,7 @@ public class PumpkinBoss : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isIdle && !isAttacking)
+        if (!isIdle && !isAttacking && !isDead)
         {
             MoveToPlayer();
         }
@@ -48,6 +55,11 @@ public class PumpkinBoss : MonoBehaviour
         } else if (collision.gameObject.CompareTag("Player"))
         {
             gameManager.GameOver();
+        } else if (collision.gameObject.CompareTag("Projectile") && isVulnerable)
+        {
+            animator.SetBool("isDead", true);
+            isDead = true;
+            gameManager.DefeatPumpkin();
         }
         rb.velocity = Vector3.zero;
     }
@@ -91,5 +103,20 @@ public class PumpkinBoss : MonoBehaviour
         isAttacking = false;
         animator.SetBool("isAttack", false);
         attackCoolDownCounter = attackCoolDown;
+    }
+
+    public void EnableVulnerable()
+    {
+        isVulnerable = true;
+    }
+
+    public void DisableVulnerable()
+    {
+        isVulnerable = false;
+    }
+
+    public void KillPumpkin()
+    {
+        Destroy(gameObject);
     }
 }

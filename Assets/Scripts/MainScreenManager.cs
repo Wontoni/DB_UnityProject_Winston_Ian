@@ -34,12 +34,14 @@ public class MainScreenManager : MonoBehaviour
 
     public void NewGame()
     {
+        manager.EnableSave();
         manager.StartNewGame();
     }
 
     public void ResumeGame()
     {
-        manager.ToggleGameStarted();
+        manager.EnableSave();
+        manager.ToggleGameStarted(true);
         Time.timeScale = 1.0f;
         SceneManager.LoadScene("MainGame");
     }

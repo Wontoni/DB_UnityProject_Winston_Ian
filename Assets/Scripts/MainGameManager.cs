@@ -26,7 +26,8 @@ public class MainGameManager : MonoBehaviour
             SceneManager.LoadScene("TitleScreen");
         } else if(!isBossRoom)
         {
-            manager = gameManager.GetComponent<GameManager>();
+            //manager = gameManager.GetComponent<GameManager>();
+            manager = GameManager.Instance;
             player.transform.position = manager.GetUserPos();
             manager.SetPlayer(player);
         } else
@@ -41,12 +42,11 @@ public class MainGameManager : MonoBehaviour
         {
             pausePopup.SetActive(false);
             Time.timeScale = 1f;
-            manager.ToggleGameStarted();
+            manager.ToggleGameStarted(true);
         }
 
         if(player == null)
         {
-            Time.timeScale = 0f;
             settings.SetActive(false);
             pausePopup.SetActive(false);
             gameOverCanvas.SetActive(true);
@@ -59,12 +59,12 @@ public class MainGameManager : MonoBehaviour
         {
             pausePopup.SetActive(true);
             Time.timeScale = 0f;
-            manager.ToggleGameStarted();
+            manager.ToggleGameStarted(false);
         } else 
         {
             pausePopup.SetActive(false);
             Time.timeScale = 1f;
-            manager.ToggleGameStarted();
+            manager.ToggleGameStarted(true);
         }
     }
 
@@ -72,7 +72,7 @@ public class MainGameManager : MonoBehaviour
     {
         pausePopup.SetActive(false);
         Time.timeScale = 1.0f;
-        manager.ToggleGameStarted();
+        manager.ToggleGameStarted(true);
     }
 
     public void ExitGame()
@@ -88,6 +88,9 @@ public class MainGameManager : MonoBehaviour
 
     public void GameOverNewGame()
     {
+        Time.timeScale = 1.0f;
+        manager.ToggleGameStarted(true);
+        manager.EnableSave();
         manager.StartNewGame();
     }
 }

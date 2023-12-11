@@ -8,5 +8,6 @@ public class PlayerData
     public float last_ypos;
     public DateTime save_datetime;
     public bool is_slime_defeated;
+    public bool is_pumpkin_defeated;
     public float timer;
 }
