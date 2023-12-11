@@ -51,7 +51,7 @@ public class AuthManager : MonoBehaviour
         form.AddField("username", registerUsername.text);
         form.AddField("password", registerPassword.text);
         form.AddField("email", registerEmail.text);
-        string url = "http://localhost:3000/auth/register";
+        string url = "https://unity-backend.onrender.com/auth/register";
         UnityWebRequest request = UnityWebRequest.Post(url, form);
         yield return request.SendWebRequest();
         var response = request.downloadHandler.text;
@@ -63,7 +63,7 @@ public class AuthManager : MonoBehaviour
         WWWForm form = new();
         form.AddField("email", loginEmail.text);
         form.AddField("password", loginPassword.text);
-        string url = "http://localhost:3000/auth/login";
+        string url = "https://unity-backend.onrender.com/auth/login";
         UnityWebRequest request = UnityWebRequest.Post(url, form);
         yield return request.SendWebRequest();
         var response = JsonUtility.FromJson<RequestFormat>(request.downloadHandler.text);
@@ -80,7 +80,7 @@ public class AuthManager : MonoBehaviour
 
     public IEnumerator Session()
     {
-        string url = "http://localhost:3000/verify";
+        string url = "https://unity-backend.onrender.com/verify";
         UnityWebRequest request = UnityWebRequest.Get(url);
         yield return request.SendWebRequest();
         var response =  JsonUtility.FromJson<RequestFormat>(request.downloadHandler.text);
@@ -94,7 +94,7 @@ public class AuthManager : MonoBehaviour
     public IEnumerator Destroy()
     {
         WWWForm form = new();
-        string url = "http://localhost:3000/auth/logout";
+        string url = "https://unity-backend.onrender.com/auth/logout";
         UnityWebRequest request = UnityWebRequest.Post(url, form);
         yield return request.SendWebRequest();
         var response = request.downloadHandler.text;

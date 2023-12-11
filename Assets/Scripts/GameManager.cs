@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
     {
         if (HasPlayerData())
         {
-            return userData.is_slime_defeated;
+            return isSlimeDefeated;
         }
 
         return false;
@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
     {
         if (HasPlayerData())
         {
-            return userData.is_pumpkin_defeated;
+            return isPumpkinDefeated;
         }
 
         return false;
@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour
         form.AddField("timer", timer.ToString());
         form.AddField("has_save", HasPlayerData() ? "1" : "0");
 
-        string url = "http://localhost:3000/save/newSaveData";
+        string url = "https://unity-backend.onrender.com/save/newSaveData";
         UnityWebRequest request = UnityWebRequest.Post(url, form);
         yield return request.SendWebRequest();
         RequestFormat response = JsonUtility.FromJson<RequestFormat>(request.downloadHandler.text);
@@ -204,7 +204,6 @@ public class GameManager : MonoBehaviour
         isPumpkinDefeated = false;
         EnableSave();
         SavePlayerData();
-        ToggleGameStarted(false);
         Destroy(playerObj);
 
     }

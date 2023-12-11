@@ -57,7 +57,7 @@ public class MainGameManager : MonoBehaviour
             settings.SetActive(false);
             pausePopup.SetActive(false);
             gameWinCanvas.SetActive(false);
-            gameOverCanvas.SetActive(true);
+            SceneManager.LoadScene("MainGame");
         }
     }
 

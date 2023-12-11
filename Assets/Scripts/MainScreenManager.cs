@@ -54,7 +54,7 @@ public class MainScreenManager : MonoBehaviour
     public IEnumerator DestroySession()
     {
         WWWForm form = new();
-        string url = "http://localhost:3000/auth/logout";
+        string url = "https://unity-backend.onrender.com/auth/logout";
         UnityWebRequest request = UnityWebRequest.Post(url, form);
         yield return request.SendWebRequest();
         var response = request.downloadHandler.text;
@@ -64,7 +64,7 @@ public class MainScreenManager : MonoBehaviour
     public IEnumerator GetUserData()
     {
         WWWForm form = new();
-        string url = "http://localhost:3000/save/saveData";
+        string url = "https://unity-backend.onrender.com/save/saveData";
         UnityWebRequest request = UnityWebRequest.Post(url, form);
         yield return request.SendWebRequest();
         PlayerData playerData = JsonUtility.FromJson<PlayerData>(request.downloadHandler.text);
