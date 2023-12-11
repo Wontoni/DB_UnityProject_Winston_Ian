@@ -11,9 +11,10 @@ public class LeaveCave : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name);
         if (collision.gameObject.CompareTag("Player"))
         {
+            GameManager gameManager = GameManager.Instance;
+            gameManager.EnableSave();
             SceneManager.LoadScene(sceneName);
         }
     }

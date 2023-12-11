@@ -16,6 +16,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float dodgeCoolodwnTotal = 0.3f;
     [SerializeField] private bool isDodging = false;
 
+    [SerializeField] public ParticleSystem dust;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +62,7 @@ public class PlayerMove : MonoBehaviour
             boxCollider.enabled = false;
             isDodging = true;
             animator.SetBool("isDodgeRoll", true);
+            dust.Play();
         }
         animator.SetFloat("MoveSpeed", moveInput.sqrMagnitude);
         if (moveInput.sqrMagnitude == 0)
@@ -84,6 +87,10 @@ public class PlayerMove : MonoBehaviour
         } else
         {
             rb.MovePosition(rb.position + dodgeSpeed * Time.fixedDeltaTime * dodgeInput);
+        }
+        if (rb.velocity.sqrMagnitude > 0)
+        {
+            dust.Play();
         }
     }
 

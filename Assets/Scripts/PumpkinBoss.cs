@@ -5,6 +5,7 @@ using UnityEngine;
 public class PumpkinBoss : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private MainGameManager mainGameManager;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject player;
@@ -20,6 +21,7 @@ public class PumpkinBoss : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mainGameManager = GameObject.Find("MainGameManager").GetComponent<MainGameManager>();
         player = GameObject.Find("Player");
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -118,5 +120,6 @@ public class PumpkinBoss : MonoBehaviour
     public void KillPumpkin()
     {
         Destroy(gameObject);
+        mainGameManager.WinGame();
     }
 }

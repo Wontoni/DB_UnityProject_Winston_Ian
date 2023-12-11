@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainGameManager : MonoBehaviour
 {
-    [SerializeField] public GameObject gameManager;
-    [SerializeField] public GameManager manager;
+    [SerializeField] public GameManager gameManager;
 
     [SerializeField] public GameObject player;
 
@@ -14,26 +14,33 @@ public class MainGameManager : MonoBehaviour
     [SerializeField] public GameObject settings;
 
     [SerializeField] public GameObject gameOverCanvas;
+    [SerializeField] public GameObject gameWinCanvas;
+    [SerializeField] public TMP_Text gameWinTimeText;
 
     [SerializeField] public bool isBossRoom = false;
 
     private void Awake()
     {
         settings = GameObject.Find("Settings");
-        gameManager = GameObject.FindGameObjectWithTag("GameManager");
+        gameManager = GameManager.Instance;
         if (gameManager == null)
         {
             SceneManager.LoadScene("TitleScreen");
         } else if(!isBossRoom)
         {
             //manager = gameManager.GetComponent<GameManager>();
-            manager = GameManager.Instance;
-            player.transform.position = manager.GetUserPos();
-            manager.SetPlayer(player);
+            gameManager = GameManager.Instance;
+            player.transform.position = gameManager.GetUserPos();
+            gameManager.SetPlayer(player);
         } else
         {
-            manager = gameManager.GetComponent<GameManager>();
+            gameManager = gameManager.GetComponent<GameManager>();
         }
+    }
+
+    private void Start()
+    {
+        WinGame();
     }
 
     private void Update()
@@ -42,13 +49,14 @@ public class MainGameManager : MonoBehaviour
         {
             pausePopup.SetActive(false);
             Time.timeScale = 1f;
-            manager.ToggleGameStarted(true);
+            gameManager.ToggleGameStarted(true);
         }
 
         if(player == null)
         {
             settings.SetActive(false);
             pausePopup.SetActive(false);
+            gameWinCanvas.SetActive(false);
             gameOverCanvas.SetActive(true);
         }
     }
@@ -59,12 +67,12 @@ public class MainGameManager : MonoBehaviour
         {
             pausePopup.SetActive(true);
             Time.timeScale = 0f;
-            manager.ToggleGameStarted(false);
+            gameManager.ToggleGameStarted(false);
         } else 
         {
             pausePopup.SetActive(false);
             Time.timeScale = 1f;
-            manager.ToggleGameStarted(true);
+            gameManager.ToggleGameStarted(true);
         }
     }
 
@@ -72,7 +80,7 @@ public class MainGameManager : MonoBehaviour
     {
         pausePopup.SetActive(false);
         Time.timeScale = 1.0f;
-        manager.ToggleGameStarted(true);
+        gameManager.ToggleGameStarted(true);
     }
 
     public void ExitGame()
@@ -83,14 +91,31 @@ public class MainGameManager : MonoBehaviour
 
     public void SaveGame()
     {
-        manager.SavePlayerData();
+        gameManager.SavePlayerData();
     }
 
     public void GameOverNewGame()
     {
         Time.timeScale = 1.0f;
-        manager.ToggleGameStarted(true);
-        manager.EnableSave();
-        manager.StartNewGame();
+        gameWinCanvas.SetActive(false);
+        gameManager.ToggleGameStarted(true);
+        gameManager.EnableSave();
+        gameManager.StartNewGame();
+    }
+
+    public void WinGame()
+    {
+        if (gameManager.CheckWin())
+        {
+            player.transform.position = Vector3.zero;
+            int seconds = (int) gameManager.TimerCount() % 60;
+            int minutes = (int) gameManager.TimerCount() / 60;
+            gameWinTimeText.text = minutes + "m " + seconds + "s";
+            Time.timeScale = 0;
+            settings.SetActive(false);
+            pausePopup.SetActive(false);
+            gameOverCanvas.SetActive(false);
+            gameWinCanvas.SetActive(true);
+        }
     }
 }

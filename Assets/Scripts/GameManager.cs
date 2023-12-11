@@ -55,7 +55,12 @@ public class GameManager : MonoBehaviour
             userData.last_ypos = 0;
             userData.is_slime_defeated = false;
             userData.is_pumpkin_defeated = false;
+            userData.timer = 0;
+
+            isSlimeDefeated = false;
+            isPumpkinDefeated = false;
         }
+        EnableSave();
         SavePlayerData();
         ToggleGameStarted(true);
         Time.timeScale = 1.0f;
@@ -135,6 +140,7 @@ public class GameManager : MonoBehaviour
         EnableSave();
         SavePlayerData();
     }
+
     public bool GetPumpkinDefeated()
     {
         if (HasPlayerData())
@@ -151,6 +157,7 @@ public class GameManager : MonoBehaviour
         EnableSave();
         SavePlayerData();
     }
+
     public void SavePlayerData()
     {
         if (canSave)
@@ -200,5 +207,15 @@ public class GameManager : MonoBehaviour
         ToggleGameStarted(false);
         Destroy(playerObj);
 
+    }
+
+    public bool CheckWin()
+    {
+        return isPumpkinDefeated && isSlimeDefeated;
+    }
+
+    public float TimerCount()
+    {
+        return timer;
     }
 }

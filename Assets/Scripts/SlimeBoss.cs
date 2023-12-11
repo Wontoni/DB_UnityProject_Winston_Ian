@@ -10,6 +10,9 @@ public class FakeHeightObject : MonoBehaviour
 
     [SerializeField] SlimeBossManager slimeBossManager;
 
+    [SerializeField] GameManager gameManager;
+    [SerializeField] MainGameManager mainGameManager;
+  
     public Transform trnsObject;
     public Transform trnsBody;
     public Transform trnsShadow;
@@ -40,10 +43,16 @@ public class FakeHeightObject : MonoBehaviour
 
     private void Awake()
     {
+        gameManager = GameManager.Instance;
+        mainGameManager = GameObject.Find("MainGameManager").GetComponent<MainGameManager>();
         rb = GetComponent<Rigidbody2D>();
         hitbox = GetComponent<PolygonCollider2D>();
         trnsBodyAnimator = trnsBody.GetComponent<Animator>();
         slimeBossManager = GameObject.Find("SlimeBossManager").GetComponent<SlimeBossManager>();
+        if (gameManager.GetSlimeDefeated())
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Start is called before the first frame update
@@ -197,7 +206,7 @@ public class FakeHeightObject : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player is dead");
+            gameManager.GameOver();
         }
     }
 
@@ -206,13 +215,14 @@ public class FakeHeightObject : MonoBehaviour
         if (!gameObject.CompareTag("SlimeDuplicate"))
         {
             GameObject[] slimes = GameObject.FindGameObjectsWithTag("SlimeDuplicate");
-
+            gameManager.DefeatSlime();
             slimeBossManager.KillBoss();
             foreach (GameObject item in slimes)
             {
                 item.GetComponent<FakeHeightObject>().killSlime();
             }
 
+            mainGameManager.WinGame();
         }
 
     }
