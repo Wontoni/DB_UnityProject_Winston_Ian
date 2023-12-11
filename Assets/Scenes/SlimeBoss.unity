@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &163497738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +156,8 @@ MonoBehaviour:
   manager: {fileID: 0}
   player: {fileID: 1230978838}
   pausePopup: {fileID: 949769797}
+  settings: {fileID: 0}
+  gameOverCanvas: {fileID: 0}
   isBossRoom: 1
 --- !u!4 &163497739
 Transform:

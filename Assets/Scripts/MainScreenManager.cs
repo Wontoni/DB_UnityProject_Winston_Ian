@@ -70,4 +70,9 @@ public class MainScreenManager : MonoBehaviour
         resumeButton.interactable = playerData.success;
     }
 
+    public void Leaderboard()
+    {
+        SceneManager.LoadScene("Leaderboard");
+    }
+
 }
